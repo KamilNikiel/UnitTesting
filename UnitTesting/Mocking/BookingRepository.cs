@@ -8,17 +8,23 @@ namespace UnitTesting.Mocking
 {
     public interface IBookingRepository
     {
-        IQueryable<Booking> GetActiveBookings(int excludingBookingId);
+        IQueryable<Booking> GetActiveBookings(int? excludingBookingId = null);
     }
 
     public class BookingRepository : IBookingRepository
     {
-        public IQueryable<Booking> GetActiveBookings(int excludingBookingId)
+        public IQueryable<Booking> GetActiveBookings(int? excludingBookingId = null)
         {
-            UnitOfWork unitOfWork = new UnitOfWork();
-            return unitOfWork.Query<Booking>()
-                .Where(
-                    b => b.Id != excludingBookingId && b.Status != "Cancelled");
+            var unitOfWork = new UnitOfWork();
+            var bookings =
+                unitOfWork.Query<Booking>()
+                    .Where(
+                        b => b.Status != "Cancelled");
+
+            if (excludingBookingId.HasValue)
+                bookings = bookings.Where(b => b.Id != excludingBookingId.Value);
+
+            return bookings;
         }
     }
 }

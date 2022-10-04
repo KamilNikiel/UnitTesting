@@ -9,6 +9,7 @@ using UnitTesting.Mocking;
 
 namespace UnitTesting.UnitTests.Mocking
 {
+    [TestFixture]
     internal class InstallerHelperTests
     {
         private InstallerHelper _installerHelper;
