@@ -23,14 +23,6 @@ namespace UnitTesting.Mocking
         }
     }
 
-    public class UnitOfWork
-    {
-        public IQueryable<T> Query<T>()
-        {
-            return new List<T>().AsQueryable();
-        }
-    }
-
     public class Booking
     {
         public string Status { get; set; }
